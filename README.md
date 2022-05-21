@@ -156,7 +156,8 @@ You need to fillup the below variables in order to use it in Okteto
   
 
 ------------------
-
+```
+  
 Please select the geographic area in which you live. Subsequent configuration
 questions will narrow this down by presenting a list of cities, representing
 the time zones in which they are located.
@@ -165,15 +166,19 @@ the time zones in which they are located.
   2. America     5. Arctic     8. Europe    11. SystemV
   3. Antarctica  6. Asia       9. Indian    12. US
 Geographic area: Asia
-
+  
+```
 This is not docker asking for the input, but the tzdata package on Debian and Ubuntu which, when installing, defaults to an interactive installation and asks for this input in some cases.
 
 To force packages to be install non-interactively on Debian and Ubuntu, you can use the DEBIAN_FRONTEND=noninteractive environment variable. You can set this in your Dockerfile when installing the package, for example;
-
+  
+```
 FROM ubuntu:20.04
 RUN apt-get update &&  DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
+```
 Or you can use a ARG instruction to set the environment variable; by using an ARG for this (instead of ENV) the env-var does not end up in the final image; to prevent the default behavior of apt-get to be changed to "non-interactively".
-
+```
 FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y tzdata
+```
